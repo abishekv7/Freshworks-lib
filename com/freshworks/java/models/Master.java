@@ -1,4 +1,4 @@
-package Models;
+package com.freshworks.java.models;
 
 public class Master {
     private String key;

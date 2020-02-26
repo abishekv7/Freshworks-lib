@@ -1,7 +1,7 @@
-package Service;
+package com.freshworks.java.service;
 
-import Models.Master;
-import Util.CommonUtil;
+import com.freshworks.java.models.Master;
+import com.freshworks.java.util.CommonUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;

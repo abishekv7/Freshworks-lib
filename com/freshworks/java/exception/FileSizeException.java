@@ -1,4 +1,4 @@
-package Exception;
+package com.freshworks.java.exception;
 
 public class FileSizeException extends Exception {
     private String reason;

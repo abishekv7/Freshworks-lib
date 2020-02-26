@@ -1,6 +1,6 @@
-package Util;
+package com.freshworks.java.util;
 
-import Models.Master;
+import com.freshworks.java.models.Master;
 
 import java.io.*;
 import java.util.ArrayList;

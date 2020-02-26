@@ -1,4 +1,4 @@
-package Models;
+package com.freshworks.java.models;
 
 public class DataVo {
     private String key;
