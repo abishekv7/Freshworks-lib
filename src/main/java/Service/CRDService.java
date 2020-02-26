@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class CRDService {
 
     private static Gson gson = new Gson();
-    private static long TTL = 1014000L;
+    public static long TTL = 1014000L;
 
     public static void writeDataToFile(String key, String jsonData, String filePath, Map<String, String> keyValueStorage, List<Master> masterCsvData) {
         keyValueStorage = readCsv(key, masterCsvData);
@@ -82,5 +82,26 @@ public class CRDService {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static void deleteData(String key, Map<String, String> keyValueStorage, List<Master> masterCsvData) {
+        keyValueStorage = CRDService.readCsv(key, masterCsvData);
+        keyValueStorage.remove(key);
+        int temp = masterCsvData.size();
+        List<Master> masterData = masterCsvData.stream().filter(master -> !master.getKey().equalsIgnoreCase(key)).collect(Collectors.toList());
+        if (masterData.size() == 0) {
+            new File("DataStore.csv").delete();
+        } else
+            masterData.forEach(master -> {
+                CRDService.writeCsv(master.getKey(), master.getFileLocation(), master.getTimestamp(), false, masterCsvData);
+            });
+        masterCsvData.stream().filter(master -> master.getKey().equalsIgnoreCase(key)).collect(Collectors.toList()).forEach(master -> {
+            new File(master.getFileLocation()).delete();
+            masterCsvData.remove(master);
+        });
+        if(temp == masterCsvData.size()) {
+            System.out.println("Deletion Unsuccessful!");
+        } else
+            System.out.println("Deleted Successfully");
     }
 }

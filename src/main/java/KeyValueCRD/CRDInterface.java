@@ -1,5 +1,7 @@
 package KeyValueCRD;
 
+import Models.DataVo;
+
 import java.util.Scanner;
 
 public interface CRDInterface {
@@ -7,7 +9,7 @@ public interface CRDInterface {
     /*
      *To add data to a file based on key
      */
-    public void createData();
+    public void createData(DataVo dataVo);
 
     /*
      *Fetching the record based on key

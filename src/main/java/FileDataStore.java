@@ -1,14 +1,14 @@
+import Exception.FileSizeException;
 import KeyValueCRD.CRDInterface;
+import Models.DataVo;
 import Models.Master;
+import Service.CRDService;
 import Util.CommonUtil;
-import Service.*;
-import Exception.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.*;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Map;
 
 public class FileDataStore implements CRDInterface {
 
@@ -16,25 +16,13 @@ public class FileDataStore implements CRDInterface {
     private static List<Master> masterCsvData = CommonUtil.loadMasterFile();
 
     @Override
-    public void createData() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter Key for the data");
-        String key = input.nextLine();
-        if (key.length() > 32) {
-            System.out.println("Key should not exceed 32 characters enter again");
-            key = input.nextLine();
-        }
-        System.out.println("Enter the data");
-        String data = input.nextLine();
-        System.out.println("Enter the file location");
-        String filePath = input.next();
+    public void createData(DataVo dataVo) {
         try {
-            JSONObject jsonData = new JSONObject(data);
-            if (CommonUtil.checkDataSize(data))
-                CRDService.writeDataToFile(key, data, filePath, keyValueStorage, masterCsvData);
+            JSONObject jsonData = new JSONObject(dataVo.getData());
+            if (CommonUtil.checkDataSize(dataVo.getData()))
+                CRDService.writeDataToFile(dataVo.getKey(), dataVo.getData(), dataVo.getFilePath(), keyValueStorage, masterCsvData);
             else
                 throw new FileSizeException("Json object size should be less than 16KB");
-            input.close();
         } catch (JSONException e) {
             System.out.println("Entered data is not a valid Json");
         } catch (FileSizeException e) {
@@ -44,24 +32,7 @@ public class FileDataStore implements CRDInterface {
 
     @Override
     public void deleteData(String key) {
-        keyValueStorage = CRDService.readCsv(key, masterCsvData);
-        keyValueStorage.remove(key);
-        int temp = masterCsvData.size();
-        List<Master> masterData = masterCsvData.stream().filter(master -> !master.getKey().equalsIgnoreCase(key)).collect(Collectors.toList());
-        if (masterData.size() == 0) {
-            new File("DataStore.csv").delete();
-        } else
-            masterData.forEach(master -> {
-                CRDService.writeCsv(master.getKey(), master.getFileLocation(), master.getTimestamp(), false, masterCsvData);
-            });
-        masterCsvData.stream().filter(master -> master.getKey().equalsIgnoreCase(key)).collect(Collectors.toList()).forEach(master -> {
-            new File(master.getFileLocation()).delete();
-            masterCsvData.remove(master);
-        });
-        if(temp == masterCsvData.size()) {
-            System.out.println("Deletion Unsuccessful!");
-        } else
-            System.out.println("Deleted Successfully");
+        CRDService.deleteData(key, keyValueStorage, masterCsvData);
     }
 
     @Override
