@@ -1,5 +1,6 @@
 package com.freshworks.java.service;
 
+import com.freshworks.java.exception.KeyAlreadyExistsException;
 import com.freshworks.java.models.Master;
 import com.freshworks.java.util.CommonUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,17 +20,23 @@ public class CRDService {
 
     public static void writeDataToFile(String key, String jsonData, String filePath, Map<String, String> keyValueStorage, List<Master> masterCsvData) {
         keyValueStorage = readCsv(key, masterCsvData);
-        keyValueStorage.put(key, jsonData);
-        String convertedData = gson.toJson(keyValueStorage);
         try {
-            File file = new File(filePath);
-            if (!file.isDirectory() || filePath.length() > 0)
-                filePath = "Data.txt";
-            FileUtils.writeStringToFile(new File(filePath), convertedData);
-            long timeStamp = System.currentTimeMillis() + TTL;
-            writeCsv(key, filePath, timeStamp, true, masterCsvData);
-        } catch (IOException e) {
-            System.out.println("Error!! while writing into file");
+            if (keyValueStorage.containsKey(key))
+                throw new KeyAlreadyExistsException("Key already present");
+            keyValueStorage.put(key, jsonData);
+            String convertedData = gson.toJson(keyValueStorage);
+            try {
+                File file = new File(filePath);
+                if (!file.isDirectory() || filePath.length() > 0)
+                    filePath = "Data.txt";
+                FileUtils.writeStringToFile(new File(filePath), convertedData);
+                long timeStamp = System.currentTimeMillis() + TTL;
+                writeCsv(key, filePath, timeStamp, true, masterCsvData);
+            } catch (IOException e) {
+                System.out.println("Error!! while writing into file");
+            }
+        } catch (KeyAlreadyExistsException e) {
+            e.printStackTrace();
         }
     }
 
@@ -100,7 +107,7 @@ public class CRDService {
                 CRDService.writeCsv(master.getKey(), master.getFileLocation(), master.getTimestamp(), false, masterCsvData);
             });
         masterCsvData.stream().filter(master -> master.getKey().equalsIgnoreCase(key)).collect(Collectors.toList()).forEach(master -> {
-            if(null != convertedData)
+            if (null != convertedData)
                 try {
                     FileUtils.writeStringToFile(new File(master.getFileLocation()), convertedData);
                 } catch (IOException e) {
@@ -110,7 +117,7 @@ public class CRDService {
                 new File(master.getFileLocation()).delete();
             masterCsvData.remove(master);
         });
-        if(null != keyValueStorage.get(key)) {
+        if (null != keyValueStorage.get(key)) {
             System.out.println("Deletion Unsuccessful!");
         } else
             System.out.println("Deleted Successfully");
