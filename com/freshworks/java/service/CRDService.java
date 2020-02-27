@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class CRDService {
 
     private static Gson gson = new Gson();
-    public static long TTL = 1014000L;
+    public static long TTL = 0;
 
     public static void writeDataToFile(String key, String jsonData, String filePath, Map<String, String> keyValueStorage, List<Master> masterCsvData) {
         keyValueStorage = readCsv(key, masterCsvData);
@@ -121,5 +121,13 @@ public class CRDService {
             System.out.println("Deletion Unsuccessful!");
         } else
             System.out.println("Deleted Successfully");
+    }
+
+    public void setTTL(long TTL) {
+        CRDService.TTL = TTL;
+    }
+
+    public long getTTL() {
+        return TTL;
     }
 }

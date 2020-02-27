@@ -44,7 +44,8 @@ public class TestCRD {
 
     @Test
     public void testWriteAndReadData() {
-        CRDService.TTL = 5000;
+        CRDService crdService = new CRDService();
+        crdService.setTTL(5000);
         String key = "testKey";
         String data = "{\"testData\" : \"testValue\"}";
         String filePath = "testTestData.txt";
