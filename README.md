@@ -1,24 +1,25 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-        <build>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <configuration>
-                        <source>1.8</source>
-                        <target>1.8</target>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </build>
-        <groupId>Freshworks-Backend</groupId>
-        <artifactId>Freshworks-Backend</artifactId>
-        <version>1.0-SNAPSHOT</version>
-        <dependencies>
+# Key-Value DataStorage
+
+A file-based key-value data store that supports the basic CRD (create, read, and delete)
+operations. This data store is meant to be used as a local storage for one single process on one
+laptop.
+
+## Getting Started
+
+1. It can be initialized using an optional file path. If one is not provided, it will reliably
+create itself in a reasonable location on the laptop.
+2. A new key-value pair can be added to the data store using the Create operation. The key
+is always a string - capped at 32chars. The value is always a JSON object - capped at
+16KB.
+3. Read operation can be performed by providing a key and it will give a proper value if a key is present.
+4. Delete operation can be performed by providing a key.
+
+### Prerequisites
+
+To reduce the size of the jar dependencies are not bundled along with it, add the following dependencies for 
+the smooth running of the jar.
+
+      <dependencies>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
@@ -59,6 +60,5 @@
 
 
         </dependencies>
-
-
-</project>
+        
+  
