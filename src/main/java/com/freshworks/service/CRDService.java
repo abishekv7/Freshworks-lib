@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class CRDService {
 
     private static Gson gson = new Gson();
-    public static long TTL = 0;
+    public static long TTL = 900000L;
 
     public static void writeDataToFile(String key, String jsonData, String filePath, Map<String, String> keyValueStorage, List<com.freshworks.models.Master> masterCsvData) {
         keyValueStorage = readCsv(key, masterCsvData);
