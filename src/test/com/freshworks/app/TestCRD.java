@@ -1,12 +1,12 @@
-package com.freshworks.tests;
+package src.test.com.freshworks.app;
 
-import com.freshworks.java.models.Master;
-import com.freshworks.java.service.CRDService;
-import com.freshworks.java.util.CommonUtil;
 import com.google.gson.Gson;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.freshworks.models.Master;
+import com.freshworks.service.CRDService;
+import com.freshworks.util.CommonUtil;
 import java.util.List;
 import java.util.Map;
 
@@ -66,12 +66,16 @@ public class TestCRD {
     @Ignore
     @Test
     public void testDeleteData() throws InterruptedException {
-        Thread.sleep(12000);
+//        Thread.sleep(12000);
         String key = "testKey";
         Gson gson = new Gson();
         String convertedData = gson.toJson(keyValueStorage);
         CRDService.deleteData(key, keyValueStorage, masterCsvData);
-        assertNull(keyValueStorage.get(key));
+        if(keyValueStorage.size() > 0) {
+            assertFalse(keyValueStorage.containsKey(key));
+        } else {
+            assertTrue(true);
+        }
     }
 
 }

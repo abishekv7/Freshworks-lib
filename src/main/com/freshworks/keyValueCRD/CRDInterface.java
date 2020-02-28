@@ -1,6 +1,6 @@
-package com.freshworks.java.keyValueCRD;
+package com.freshworks.keyValueCRD;
 
-import com.freshworks.java.models.DataVo;
+import com.freshworks.models.DataVo;
 
 public interface CRDInterface {
 

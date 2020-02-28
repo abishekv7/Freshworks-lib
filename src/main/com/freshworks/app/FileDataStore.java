@@ -1,13 +1,14 @@
-package com.freshworks.java;
+package com.freshworks.app;
 
-import com.freshworks.java.exception.FileSizeException;
-import com.freshworks.java.keyValueCRD.CRDInterface;
-import com.freshworks.java.models.DataVo;
-import com.freshworks.java.models.Master;
-import com.freshworks.java.service.CRDService;
-import com.freshworks.java.util.CommonUtil;
+import com.freshworks.exception.FileSizeException;
+import com.freshworks.models.Master;
+import com.freshworks.service.CRDService;
+import com.freshworks.util.CommonUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.freshworks.keyValueCRD.CRDInterface;
+import com.freshworks.models.DataVo;
 
 import java.util.List;
 import java.util.Map;

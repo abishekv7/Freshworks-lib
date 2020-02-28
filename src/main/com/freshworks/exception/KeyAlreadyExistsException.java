@@ -1,4 +1,4 @@
-package com.freshworks.java.exception;
+package com.freshworks.exception;
 
 public class KeyAlreadyExistsException extends Exception {
     private String reason;
