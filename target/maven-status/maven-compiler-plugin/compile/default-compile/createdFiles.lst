@@ -1,8 +1,0 @@
-com\freshworks\exception\FileSizeException.class
-com\freshworks\exception\KeyAlreadyExistsException.class
-com\freshworks\models\Master.class
-com\freshworks\util\CommonUtil.class
-com\freshworks\service\CRDService.class
-com\freshworks\models\DataVo.class
-com\freshworks\app\FileDataStore.class
-com\freshworks\keyValueCRD\CRDInterface.class
