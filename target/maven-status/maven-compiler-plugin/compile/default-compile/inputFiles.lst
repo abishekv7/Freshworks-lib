@@ -1,6 +1,8 @@
-C:\Workspace\Freshworks-Backend-master\Freshworks-Backend-master\src\main\java\FileDataStore.java
-C:\Workspace\Freshworks-Backend-master\Freshworks-Backend-master\src\main\java\Models\Master.java
-C:\Workspace\Freshworks-Backend-master\Freshworks-Backend-master\src\main\java\Util\CommonUtil.java
-C:\Workspace\Freshworks-Backend-master\Freshworks-Backend-master\src\main\java\KeyValueCRD\CRDInterface.java
-C:\Workspace\Freshworks-Backend-master\Freshworks-Backend-master\src\main\java\Service\CRDService.java
-C:\Workspace\Freshworks-Backend-master\Freshworks-Backend-master\src\main\java\Exception\FileSizeException.java
+C:\Workspace\scratches\Freshworks-lib\src\main\java\com\freshworks\models\Master.java
+C:\Workspace\scratches\Freshworks-lib\src\main\java\com\freshworks\exception\FileSizeException.java
+C:\Workspace\scratches\Freshworks-lib\src\main\java\com\freshworks\exception\KeyAlreadyExistsException.java
+C:\Workspace\scratches\Freshworks-lib\src\main\java\com\freshworks\models\DataVo.java
+C:\Workspace\scratches\Freshworks-lib\src\main\java\com\freshworks\util\CommonUtil.java
+C:\Workspace\scratches\Freshworks-lib\src\main\java\com\freshworks\app\FileDataStore.java
+C:\Workspace\scratches\Freshworks-lib\src\main\java\com\freshworks\service\CRDService.java
+C:\Workspace\scratches\Freshworks-lib\src\main\java\com\freshworks\keyValueCRD\CRDInterface.java
