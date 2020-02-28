@@ -1,8 +1,5 @@
-package com.freshworks.java.service;
+package src.main.com.freshworks.service;
 
-import com.freshworks.java.exception.KeyAlreadyExistsException;
-import com.freshworks.java.models.Master;
-import com.freshworks.java.util.CommonUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.apache.commons.io.FileUtils;
@@ -18,11 +15,11 @@ public class CRDService {
     private static Gson gson = new Gson();
     public static long TTL = 0;
 
-    public static void writeDataToFile(String key, String jsonData, String filePath, Map<String, String> keyValueStorage, List<Master> masterCsvData) {
+    public static void writeDataToFile(String key, String jsonData, String filePath, Map<String, String> keyValueStorage, List<com.freshworks.models.Master> masterCsvData) {
         keyValueStorage = readCsv(key, masterCsvData);
         try {
             if (keyValueStorage.containsKey(key))
-                throw new KeyAlreadyExistsException("Key already present");
+                throw new com.freshworks.exception.KeyAlreadyExistsException("Key already present");
             keyValueStorage.put(key, jsonData);
             String convertedData = gson.toJson(keyValueStorage);
             try {
@@ -35,15 +32,15 @@ public class CRDService {
             } catch (IOException e) {
                 System.out.println("Error!! while writing into file");
             }
-        } catch (KeyAlreadyExistsException e) {
+        } catch (com.freshworks.exception.KeyAlreadyExistsException e) {
             e.printStackTrace();
         }
     }
 
-    public static Map<String, String> readCsv(String key, List<Master> masterCsvData) {
+    public static Map<String, String> readCsv(String key, List<com.freshworks.models.Master> masterCsvData) {
         Map<String, String> keyValueData = new HashMap<>();
         if (masterCsvData.size() == 0) {
-            masterCsvData = CommonUtil.loadMasterFile();
+            masterCsvData = com.freshworks.util.CommonUtil.loadMasterFile();
         }
         masterCsvData.stream().filter(master -> master.getKey().equalsIgnoreCase(key)).collect(Collectors.toList()).forEach(master -> {
             try {
@@ -62,7 +59,7 @@ public class CRDService {
         return keyValueData;
     }
 
-    public static void writeCsv(String key, String filePath, long timeStamp, boolean append, List<Master> masterCsvData) {
+    public static void writeCsv(String key, String filePath, long timeStamp, boolean append, List<com.freshworks.models.Master> masterCsvData) {
 
         FileWriter fileWriter = null;
         try {
@@ -75,7 +72,7 @@ public class CRDService {
             fileWriter.append(",");
             fileWriter.append(String.valueOf(timeStamp));
 
-            Master master = new Master();
+            com.freshworks.models.Master master = new com.freshworks.models.Master();
             master.setFileLocation(filePath);
             master.setKey(key);
             master.setTimestamp(timeStamp);
@@ -94,11 +91,11 @@ public class CRDService {
         }
     }
 
-    public static void deleteData(String key, Map<String, String> keyValueStorage, List<Master> masterCsvData) {
+    public static void deleteData(String key, Map<String, String> keyValueStorage, List<com.freshworks.models.Master> masterCsvData) {
         keyValueStorage = CRDService.readCsv(key, masterCsvData);
         keyValueStorage.remove(key);
         String convertedData = gson.toJson(keyValueStorage);
-        List<Master> masterData = masterCsvData.stream().filter(master -> !master.getKey().equalsIgnoreCase(key)).collect(Collectors.toList());
+        List<com.freshworks.models.Master> masterData = masterCsvData.stream().filter(master -> !master.getKey().equalsIgnoreCase(key)).collect(Collectors.toList());
         if (masterData.size() == 0) {
             new File("DataStore.csv").delete();
             new File(masterCsvData.get(0).getFileLocation()).delete();
